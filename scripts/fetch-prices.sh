@@ -5,21 +5,37 @@ mkdir -p data
 
 API_URL="https://api.metals.dev/v1/latest?api_key=${METALS_DEV_API_KEY}&currency=USD&unit=toz"
 
-echo "Fetching prices..."
+echo "Fetching prices from metals.dev..."
 
 RESPONSE=$(curl -sS "$API_URL")
 
 echo "Raw API response:"
 echo "$RESPONSE"
 
-# Make sure response is valid JSON
+# Make sure the response is valid JSON
 if ! echo "$RESPONSE" | jq empty >/dev/null 2>&1; then
   echo "API did not return valid JSON. Keeping existing prices.json."
   exit 0
 fi
 
-GOLD=$(echo "$RESPONSE" | jq -r '.metals.gold // .rates.gold // .gold // empty')
-SILVER=$(echo "$RESPONSE" | jq -r '.metals.silver // .rates.silver // .silver // empty')
+# Try multiple possible response formats
+GOLD=$(echo "$RESPONSE" | jq -r '
+  .metals.gold //
+  .rates.gold //
+  .rates.XAU //
+  .rates.GOLD //
+  .gold //
+  empty
+')
+
+SILVER=$(echo "$RESPONSE" | jq -r '
+  .metals.silver //
+  .rates.silver //
+  .rates.XAG //
+  .rates.SILVER //
+  .silver //
+  empty
+')
 
 echo "Parsed gold: $GOLD"
 echo "Parsed silver: $SILVER"
@@ -30,7 +46,7 @@ if ! [[ "$GOLD" =~ ^[0-9]+([.][0-9]+)?$ ]] || ! [[ "$SILVER" =~ ^[0-9]+([.][0-9]
   exit 0
 fi
 
-# Round to 2 decimals
+# Round to 2 decimal places
 GOLD=$(printf "%.2f" "$GOLD")
 SILVER=$(printf "%.2f" "$SILVER")
 
@@ -49,10 +65,14 @@ jq -n \
     currency: $currency,
     unit: $unit,
     metals: {
-      gold: { spot: $gold },
-      silver: { spot: $silver }
+      gold: {
+        spot: $gold
+      },
+      silver: {
+        spot: $silver
+      }
     }
   }' > data/prices.json
 
-echo "Updated successfully:"
+echo "Updated data/prices.json successfully:"
 cat data/prices.json
