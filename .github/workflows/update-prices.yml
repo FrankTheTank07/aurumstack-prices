@@ -1,5 +1,9 @@
 name: Update Metal Prices
 
+concurrency:
+  group: update-metal-prices
+  cancel-in-progress: false
+
 on:
   workflow_dispatch:
 
@@ -15,7 +19,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
