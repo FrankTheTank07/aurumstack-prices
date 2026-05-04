@@ -4,9 +4,8 @@ on:
   workflow_dispatch:
 
   schedule:
-    # Runs twice per day at 05:17 UTC and 17:17 UTC
-    # About 60–62 API calls per month
-    - cron: "17 5,17 * * *"
+    # Runs every 20 minutes
+    - cron: "*/20 * * * *"
 
 permissions:
   contents: write
@@ -22,8 +21,6 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y jq
 
       - name: Run script
-        env:
-          METALS_DEV_API_KEY: ${{ secrets.METALS_DEV_API_KEY }}
         run: bash scripts/fetch-prices.sh
 
       - name: Commit JSON
