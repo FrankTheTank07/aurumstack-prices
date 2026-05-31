@@ -1,0 +1,16 @@
+{
+  "name": "AurumStack",
+  "short_name": "AurumStack",
+  "description": "Private gold and silver portfolio tracking.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0c100f",
+  "theme_color": "#0c100f",
+  "icons": [
+    {
+      "src": "assets/aurumstack-icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ]
+}
