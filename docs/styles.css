@@ -188,9 +188,11 @@ h3 { margin-bottom: 9px; font-size: 20px; line-height: 1.2; }
   max-width: var(--max);
   margin: auto;
   padding: 38px;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1fr;
   gap: 25px;
   align-items: center;
+  justify-items: center;
+  text-align: center;
   border: 1px solid var(--line);
   background: var(--panel-warm);
 }
@@ -204,6 +206,7 @@ h3 { margin-bottom: 9px; font-size: 20px; line-height: 1.2; }
   background: var(--gold-soft);
 }
 .free-mark svg { width: 34px; height: 34px; }
+.free-inner .eyebrow { justify-content: center; }
 .free-inner h2 { margin-bottom: 8px; font-size: clamp(28px, 4vw, 43px); }
 .free-inner p:last-child { max-width: 760px; margin-bottom: 0; color: var(--muted); font-size: 17px; }
 footer {
