@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-06-08T22:51:09Z",
+  "updatedAt": "2026-06-08T23:55:52Z",
   "source": "Swissquote public quotes",
   "currency": "USD",
   "unit": "troy_ounce",
   "metals": {
     "gold": {
-      "spot": 4326.88
+      "spot": 4317.04
     },
     "silver": {
-      "spot": 68.10
+      "spot": 67.86
     }
   }
 }
