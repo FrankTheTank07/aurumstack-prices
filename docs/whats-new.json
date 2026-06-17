@@ -2,14 +2,14 @@
   "schemaVersion": 3,
   "lastUpdated": "2026-06-17",
   "title": "What's New",
-  "summary": "Recent AurumStack beta improvements focus on navigation, visual polish, and a smoother cross-platform experience.",
+  "summary": "Version 1.1.0 brings a more polished cross-platform experience, clearer market context, and improved app information.",
   "announcements": [],
   "releases": [
     {
-      "id": "1.0.1-beta",
-      "title": "Version 1.0.1 Beta",
+      "id": "1.1.0-beta",
+      "title": "Version 1.1.0 Beta",
       "date": "2026-06-17",
-      "summary": "Navigation, dashboard polish, and beta foundations.",
+      "summary": "Navigation, dashboard, holdings, information, and platform-specific improvements.",
       "changes": [
         {
           "id": "beta-ui-polish",
@@ -20,7 +20,7 @@
         {
           "id": "holdings-dashboard-updates",
           "title": "Dashboard and holdings updates",
-          "body": "Improved the dashboard, holding cards, and spot price cards so gold and silver are easier to scan at a glance.",
+          "body": "Improved the dashboard, tightened holding card spacing, and refined spot price cards so gold and silver are easier to scan at a glance.",
           "category": "Improvement"
         },
         {
@@ -37,8 +37,8 @@
         },
         {
           "id": "whats-new-history",
-          "title": "What's New history",
-          "body": "Added support for grouped update history so release notes can stay organized as AurumStack changes over time.",
+          "title": "What's New and announcements",
+          "body": "Added grouped update history and a remotely updated announcements section with saved offline content.",
           "category": "Improvement"
         },
         {
@@ -46,6 +46,18 @@
           "title": "Daily spot movement",
           "body": "Spot price cards can show today's dollar and percent movement measured from the first AurumStack price update after 00:00 UTC.",
           "category": "Improvement"
+        },
+        {
+          "id": "native-ios-actions",
+          "title": "More native iPhone interactions",
+          "body": "Holding actions and photo source choices now use iPhone-style action sheets on iOS while preserving familiar Android controls.",
+          "category": "Improvement"
+        },
+        {
+          "id": "legal-contact-information",
+          "title": "Legal and contact information",
+          "body": "Added clear pricing and financial disclaimers and refreshed the Contact Us page with friendlier support information.",
+          "category": "Information"
         }
       ]
     }
