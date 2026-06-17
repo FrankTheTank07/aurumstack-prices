@@ -39,6 +39,12 @@
           "title": "What's New history",
           "body": "Added support for grouped update history so release notes can stay organized as AurumStack changes over time.",
           "category": "Improvement"
+        },
+        {
+          "id": "daily-spot-movement",
+          "title": "Daily spot movement",
+          "body": "Spot price cards can show today's dollar and percent movement measured from the first AurumStack price update after 00:00 UTC.",
+          "category": "Improvement"
         }
       ]
     }
