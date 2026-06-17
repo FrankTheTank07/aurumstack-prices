@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "lastUpdated": "2026-06-17",
+  "title": "What's New",
+  "summary": "Recent AurumStack beta improvements focus on navigation, visual polish, and a smoother cross-platform experience.",
+  "entries": [
+    {
+      "id": "beta-ui-polish",
+      "title": "UI improvements",
+      "body": "Refined the app layout with a cleaner bottom navigation, smoother tab highlighting, and a more polished black and gold AurumStack feel.",
+      "category": "Improvement"
+    },
+    {
+      "id": "holdings-dashboard-updates",
+      "title": "Dashboard and holdings updates",
+      "body": "Improved the dashboard, holding cards, and spot price cards so gold and silver are easier to scan at a glance.",
+      "category": "Improvement"
+    },
+    {
+      "id": "calculator-polish",
+      "title": "Calculator polish",
+      "body": "Updated the calculator presentation to make estimated values clearer while keeping the same simple calculation flow.",
+      "category": "Improvement"
+    },
+    {
+      "id": "backup-privacy-foundation",
+      "title": "Backup and privacy foundation",
+      "body": "Continued improving local-only tracking, backup and restore support, and privacy-focused app messaging for beta testers.",
+      "category": "Beta"
+    }
+  ]
+}
