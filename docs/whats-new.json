@@ -1,8 +1,9 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "lastUpdated": "2026-06-17",
   "title": "What's New",
   "summary": "Recent AurumStack beta improvements focus on navigation, visual polish, and a smoother cross-platform experience.",
+  "announcements": [],
   "releases": [
     {
       "id": "1.0.1-beta",
