@@ -74,12 +74,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const params = new URLSearchParams({
-      bcc: valid.join(","),
-      subject: subjectInput.value.trim(),
-      body: bodyInput.value.trim(),
-    });
-    const mailtoUrl = `mailto:support@aurumstack.app?${params.toString()}`;
+    const bcc = encodeURIComponent(valid.join(","));
+    const subject = encodeURIComponent(subjectInput.value.trim());
+    const body = encodeURIComponent(bodyInput.value.trim());
+    const mailtoUrl = `mailto:support@aurumstack.app?bcc=${bcc}&subject=${subject}&body=${body}`;
 
     if (mailtoUrl.length > 1800) {
       status.textContent = "This recipient list is too large for a reliable email link. Split it into smaller batches and try again.";
