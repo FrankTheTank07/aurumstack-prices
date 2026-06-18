@@ -65,6 +65,50 @@ fi
 # Timestamp
 UPDATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
+# Preserve every successful observation in a separate feed so the latest-price
+# response can stay small for current app clients.
+HISTORY_FILE="data/price-history.json"
+if [[ ! -f "$HISTORY_FILE" ]]; then
+  jq -n \
+    --arg source "Swissquote public quotes" \
+    --arg currency "USD" \
+    --arg unit "troy_ounce" \
+    '{
+      schemaVersion: 1,
+      source: $source,
+      currency: $currency,
+      unit: $unit,
+      firstRecordedAt: null,
+      lastUpdated: null,
+      entries: []
+    }' > "$HISTORY_FILE"
+elif ! jq -e '.schemaVersion == 1 and (.entries | type == "array")' "$HISTORY_FILE" >/dev/null; then
+  echo "Price history is invalid; refusing to overwrite it." >&2
+  exit 1
+fi
+
+HISTORY_TEMP=$(mktemp)
+jq \
+  --arg recordedAt "$UPDATED_AT" \
+  --argjson goldBid "$GOLD_BID" \
+  --argjson goldAsk "$GOLD_ASK" \
+  --argjson gold "$GOLD_SPOT" \
+  --argjson silverBid "$SILVER_BID" \
+  --argjson silverAsk "$SILVER_ASK" \
+  --argjson silver "$SILVER_SPOT" \
+  '
+    .firstRecordedAt = (.firstRecordedAt // $recordedAt)
+    | .lastUpdated = $recordedAt
+    | .entries += [{
+        recordedAt: $recordedAt,
+        metals: {
+          gold: {bid: $goldBid, ask: $goldAsk, spot: $gold},
+          silver: {bid: $silverBid, ask: $silverAsk, spot: $silver}
+        }
+      }]
+  ' "$HISTORY_FILE" > "$HISTORY_TEMP"
+mv "$HISTORY_TEMP" "$HISTORY_FILE"
+
 # Write JSON
 jq -n \
   --arg updatedAt "$UPDATED_AT" \
