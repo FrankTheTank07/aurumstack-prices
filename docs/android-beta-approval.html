@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Prepare Android beta approval emails for AurumStack testers.">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Android Beta Approvals | AurumStack</title>
+  <link rel="icon" type="image/png" href="assets/aurumstack-icon.png">
+  <link rel="apple-touch-icon" href="assets/aurumstack-icon.png">
+  <meta name="theme-color" content="#0c100f">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="AurumStack home">
+      <img src="assets/aurumstack-icon.png" alt="">
+      <span>AurumStack</span>
+    </a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="support.html">Support</a>
+    </nav>
+    <button class="mobile-menu-button" type="button" aria-label="Open navigation" aria-expanded="false">
+      <i data-lucide="menu"></i>
+    </button>
+  </header>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <a href="index.html">Home</a>
+    <a href="support.html">Support</a>
+  </nav>
+
+  <main class="page-main approval-page">
+    <div class="page-wrap">
+      <section class="page-intro">
+        <p class="eyebrow"><i data-lucide="mail-check"></i> Android beta</p>
+        <h1>Prepare approval email</h1>
+        <p>Paste the approved Google account email addresses below. Processing happens only in this browser.</p>
+      </section>
+
+      <form class="approval-tool" id="beta-approval-form" novalidate>
+        <div class="field-group">
+          <div class="field-heading">
+            <label for="beta-emails">Approved email addresses</label>
+            <span id="email-count" aria-live="polite">0 valid</span>
+          </div>
+          <textarea id="beta-emails" name="emails" rows="9" autocomplete="off" spellcheck="false" placeholder="tester@example.com&#10;another@example.com"></textarea>
+          <p class="field-help">Separate addresses with line breaks, commas, semicolons, or spaces.</p>
+        </div>
+
+        <div class="approval-message-grid">
+          <div class="field-group">
+            <label for="approval-subject">Subject</label>
+            <input id="approval-subject" name="subject" type="text" value="AurumStack Android Beta Access Approved">
+          </div>
+          <div class="field-group">
+            <label for="approval-body">Message</label>
+            <textarea id="approval-body" name="body" rows="11">Hello,
+
+Your request to join the AurumStack closed beta for Android has been approved.
+
+You can now open the following link using the Google account you requested access with to download AurumStack from Google Play:
+
+https://play.google.com/store/apps/details?id=com.aurumstack1.app
+
+Thank you for helping test AurumStack.
+
+AurumStack Support</textarea>
+          </div>
+        </div>
+
+        <div class="approval-status" id="approval-status" role="status" aria-live="polite"></div>
+
+        <div class="approval-actions">
+          <button class="button button-primary" type="submit">
+            <i data-lucide="send"></i>
+            Open approval email
+          </button>
+          <button class="button button-secondary" id="clear-approval-form" type="button">
+            <i data-lucide="eraser"></i>
+            Clear addresses
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <a class="brand" href="index.html">
+      <img src="assets/aurumstack-icon.png" alt="">
+      <span>AurumStack</span>
+    </a>
+    <p>Private gold & silver portfolio tracking.</p>
+    <nav aria-label="Footer navigation">
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </footer>
+</body>
+</html>
