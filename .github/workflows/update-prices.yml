@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
   schedule:
-    # Runs every 20 minutes
-    - cron: "*/20 * * * *"
+    # Runs at the start of every hour (UTC)
+    - cron: "0 * * * *"
 
 permissions:
   contents: write
