@@ -2,7 +2,7 @@ name: Update Metal Prices
 
 concurrency:
   group: update-metal-prices
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 on:
   workflow_dispatch:
@@ -17,13 +17,16 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
+      - name: Verify required tools
+        run: |
+          jq --version
+          curl --version
 
       - name: Run script
         run: bash scripts/fetch-prices.sh

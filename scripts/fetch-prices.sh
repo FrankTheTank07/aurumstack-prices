@@ -7,10 +7,19 @@ mkdir -p data
 # Data sources
 GOLD_URL="https://forex-data-feed.swissquote.com/public-quotes/bboquotes/instrument/XAU/USD"
 SILVER_URL="https://forex-data-feed.swissquote.com/public-quotes/bboquotes/instrument/XAG/USD"
+CURL_OPTIONS=(
+  --fail
+  --silent
+  --show-error
+  --retry 3
+  --retry-all-errors
+  --connect-timeout 10
+  --max-time 30
+)
 
 # Fetch data
-GOLD_RESPONSE=$(curl -sS "$GOLD_URL")
-SILVER_RESPONSE=$(curl -sS "$SILVER_URL")
+GOLD_RESPONSE=$(curl "${CURL_OPTIONS[@]}" "$GOLD_URL")
+SILVER_RESPONSE=$(curl "${CURL_OPTIONS[@]}" "$SILVER_URL")
 
 # Extract bid/ask
 GOLD_BID=$(echo "$GOLD_RESPONSE" | jq -r '.[0].spreadProfilePrices[0].bid // empty')
@@ -24,7 +33,8 @@ if ! [[ "$GOLD_BID" =~ ^[0-9]+([.][0-9]+)?$ ]] || \
    ! [[ "$GOLD_ASK" =~ ^[0-9]+([.][0-9]+)?$ ]] || \
    ! [[ "$SILVER_BID" =~ ^[0-9]+([.][0-9]+)?$ ]] || \
    ! [[ "$SILVER_ASK" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
-  exit 0
+  echo "Price source returned an invalid response; refusing to publish stale data." >&2
+  exit 1
 fi
 
 # Calculate midpoint (spot)
