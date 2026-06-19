@@ -1,9 +1,16 @@
 {
   "schemaVersion": 3,
-  "lastUpdated": "2026-06-17",
+  "lastUpdated": "2026-06-18",
   "title": "What's New",
   "summary": "Version 1.1.0 brings a more polished cross-platform experience, clearer market context, and improved app information.",
-  "announcements": [],
+  "announcements": [
+    {
+      "id": "historical-performance-coming-soon",
+      "title": "Coming Soon: Historical Performance",
+      "body": "Explore recorded gold and silver spot price history across multiple time ranges with an interactive chart.",
+      "date": "2026-06-18"
+    }
+  ],
   "releases": [
     {
       "id": "1.1.0-beta",
