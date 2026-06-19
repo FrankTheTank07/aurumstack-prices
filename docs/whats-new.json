@@ -2,16 +2,41 @@
   "schemaVersion": 3,
   "lastUpdated": "2026-06-18",
   "title": "What's New",
-  "summary": "Version 1.1.0 brings a more polished cross-platform experience, clearer market context, and improved app information.",
-  "announcements": [
-    {
-      "id": "historical-performance-coming-soon",
-      "title": "Coming Soon: Historical Performance",
-      "body": "Explore recorded gold and silver spot price history across multiple time ranges with an interactive chart.",
-      "date": "2026-06-18"
-    }
-  ],
+  "summary": "Version 1.2.0 adds recorded metal price history, richer interactive charts, and useful refresh and photo improvements.",
+  "announcements": [],
   "releases": [
+    {
+      "id": "1.2.0-beta",
+      "title": "Version 1.2.0 Beta",
+      "date": "2026-06-18",
+      "summary": "Historical metal prices, interactive chart improvements, and smoother everyday controls.",
+      "changes": [
+        {
+          "id": "metal-price-history",
+          "title": "Gold and silver price history",
+          "body": "Added a Price History page for exploring recorded gold and silver spot prices across one day, one week, one month, six months, one year, or all available history.",
+          "category": "New"
+        },
+        {
+          "id": "interactive-performance-charts",
+          "title": "Interactive charts",
+          "body": "Refined performance and price charts with clearer visuals and touch controls for reviewing values and dates across the timeline.",
+          "category": "Improvement"
+        },
+        {
+          "id": "dashboard-price-refresh",
+          "title": "Dashboard price refresh",
+          "body": "Pull down on the Dashboard to check for the latest published AurumStack spot prices.",
+          "category": "Improvement"
+        },
+        {
+          "id": "photo-deletion-feedback",
+          "title": "Photo deletion fix",
+          "body": "Attached photo thumbnails now disappear immediately after they are deleted from a holding.",
+          "category": "Fix"
+        }
+      ]
+    },
     {
       "id": "1.1.0-beta",
       "title": "Version 1.1.0 Beta",
