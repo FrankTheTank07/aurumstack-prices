@@ -4,6 +4,37 @@ set -euo pipefail
 # Ensure output directory exists
 mkdir -p data
 
+# The metals session runs from Sunday 17:00 through Friday 16:00 in Chicago,
+# with a daily maintenance break from 16:00 to 17:00. Keep this guard for
+# manual workflow runs as well as the narrower GitHub Actions schedule.
+MARKET_DAY=${AURUMSTACK_MARKET_DAY:-$(TZ=America/Chicago date +%u)}
+MARKET_HOUR=${AURUMSTACK_MARKET_HOUR:-$(TZ=America/Chicago date +%H)}
+MARKET_HOUR=$((10#$MARKET_HOUR))
+
+MARKET_IS_OPEN=false
+case "$MARKET_DAY" in
+  1|2|3|4)
+    if (( MARKET_HOUR < 16 || MARKET_HOUR >= 17 )); then
+      MARKET_IS_OPEN=true
+    fi
+    ;;
+  5)
+    if (( MARKET_HOUR < 16 )); then
+      MARKET_IS_OPEN=true
+    fi
+    ;;
+  7)
+    if (( MARKET_HOUR >= 17 )); then
+      MARKET_IS_OPEN=true
+    fi
+    ;;
+esac
+
+if [[ "$MARKET_IS_OPEN" != true ]]; then
+  echo "Precious metals market is closed; skipping price update."
+  exit 0
+fi
+
 # Data sources
 GOLD_URL="https://forex-data-feed.swissquote.com/public-quotes/bboquotes/instrument/XAU/USD"
 SILVER_URL="https://forex-data-feed.swissquote.com/public-quotes/bboquotes/instrument/XAG/USD"
@@ -24,18 +55,31 @@ SILVER_RESPONSE=$(curl "${CURL_OPTIONS[@]}" "$SILVER_URL")
 # Extract bid/ask
 GOLD_BID=$(echo "$GOLD_RESPONSE" | jq -r '.[0].spreadProfilePrices[0].bid // empty')
 GOLD_ASK=$(echo "$GOLD_RESPONSE" | jq -r '.[0].spreadProfilePrices[0].ask // empty')
+GOLD_SOURCE_TIMESTAMP=$(echo "$GOLD_RESPONSE" | jq -r '.[0].ts // empty')
 
 SILVER_BID=$(echo "$SILVER_RESPONSE" | jq -r '.[0].spreadProfilePrices[0].bid // empty')
 SILVER_ASK=$(echo "$SILVER_RESPONSE" | jq -r '.[0].spreadProfilePrices[0].ask // empty')
+SILVER_SOURCE_TIMESTAMP=$(echo "$SILVER_RESPONSE" | jq -r '.[0].ts // empty')
 
 # Validate values
 if ! [[ "$GOLD_BID" =~ ^[0-9]+([.][0-9]+)?$ ]] || \
    ! [[ "$GOLD_ASK" =~ ^[0-9]+([.][0-9]+)?$ ]] || \
    ! [[ "$SILVER_BID" =~ ^[0-9]+([.][0-9]+)?$ ]] || \
-   ! [[ "$SILVER_ASK" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
+   ! [[ "$SILVER_ASK" =~ ^[0-9]+([.][0-9]+)?$ ]] || \
+   ! [[ "$GOLD_SOURCE_TIMESTAMP" =~ ^[0-9]+$ ]] || \
+   ! [[ "$SILVER_SOURCE_TIMESTAMP" =~ ^[0-9]+$ ]]; then
   echo "Price source returned an invalid response; refusing to publish stale data." >&2
   exit 1
 fi
+
+if (( GOLD_SOURCE_TIMESTAMP < SILVER_SOURCE_TIMESTAMP )); then
+  SOURCE_TIMESTAMP_MS=$GOLD_SOURCE_TIMESTAMP
+else
+  SOURCE_TIMESTAMP_MS=$SILVER_SOURCE_TIMESTAMP
+fi
+SOURCE_UPDATED_AT=$(jq -nr \
+  --argjson milliseconds "$SOURCE_TIMESTAMP_MS" \
+  '$milliseconds / 1000 | floor | todateiso8601')
 
 # Calculate midpoint (spot)
 GOLD_SPOT=$(awk "BEGIN { printf \"%.2f\", ($GOLD_BID + $GOLD_ASK) / 2 }")
@@ -43,12 +87,19 @@ SILVER_SPOT=$(awk "BEGIN { printf \"%.2f\", ($SILVER_BID + $SILVER_ASK) / 2 }")
 
 # Read previous published values when they exist
 PREVIOUS_UPDATED_AT=$(jq -r '.updatedAt // .updated_at // empty' data/prices.json 2>/dev/null || true)
+PREVIOUS_SOURCE_UPDATED_AT=$(jq -r '.sourceUpdatedAt // .source_updated_at // empty' data/prices.json 2>/dev/null || true)
 PREVIOUS_GOLD_SPOT=$(jq -r '.metals.gold.spot // empty' data/prices.json 2>/dev/null || true)
 PREVIOUS_SILVER_SPOT=$(jq -r '.metals.silver.spot // empty' data/prices.json 2>/dev/null || true)
 CURRENT_DAY_START_AT=$(date -u +"%Y-%m-%dT00:00:00Z")
 EXISTING_DAY_START_AT=$(jq -r '.dayStartAt // empty' data/prices.json 2>/dev/null || true)
 EXISTING_GOLD_DAY_OPEN=$(jq -r '.metals.gold.dayOpenSpot // empty' data/prices.json 2>/dev/null || true)
 EXISTING_SILVER_DAY_OPEN=$(jq -r '.metals.silver.dayOpenSpot // empty' data/prices.json 2>/dev/null || true)
+
+if [[ -n "$PREVIOUS_SOURCE_UPDATED_AT" ]] && \
+   [[ "$PREVIOUS_SOURCE_UPDATED_AT" == "$SOURCE_UPDATED_AT" ]]; then
+  echo "Swissquote has not published a new source quote; skipping duplicate observation."
+  exit 0
+fi
 
 if ! [[ "$PREVIOUS_GOLD_SPOT" =~ ^[0-9]+([.][0-9]+)?$ ]]; then
   PREVIOUS_GOLD_SPOT=null
@@ -100,6 +151,7 @@ fi
 HISTORY_TEMP=$(mktemp)
 jq \
   --arg recordedAt "$UPDATED_AT" \
+  --arg sourceUpdatedAt "$SOURCE_UPDATED_AT" \
   --argjson goldBid "$GOLD_BID" \
   --argjson goldAsk "$GOLD_ASK" \
   --argjson gold "$GOLD_SPOT" \
@@ -111,6 +163,7 @@ jq \
     | .lastUpdated = $recordedAt
     | .entries += [{
         recordedAt: $recordedAt,
+        sourceUpdatedAt: $sourceUpdatedAt,
         metals: {
           gold: {bid: $goldBid, ask: $goldAsk, spot: $gold},
           silver: {bid: $silverBid, ask: $silverAsk, spot: $silver}
@@ -122,6 +175,7 @@ mv "$HISTORY_TEMP" "$HISTORY_FILE"
 # Write JSON
 jq -n \
   --arg updatedAt "$UPDATED_AT" \
+  --arg sourceUpdatedAt "$SOURCE_UPDATED_AT" \
   --arg previousUpdatedAt "$PREVIOUS_UPDATED_AT" \
   --arg dayStartAt "$CURRENT_DAY_START_AT" \
   --arg source "Swissquote public quotes" \
@@ -135,6 +189,7 @@ jq -n \
   --argjson silverDayOpen "$SILVER_DAY_OPEN" \
   '{
     updatedAt: $updatedAt,
+    sourceUpdatedAt: $sourceUpdatedAt,
     previousUpdatedAt: (if $previousUpdatedAt == "" then null else $previousUpdatedAt end),
     dayStartAt: $dayStartAt,
     source: $source,

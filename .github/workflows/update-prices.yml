@@ -8,8 +8,12 @@ on:
   workflow_dispatch:
 
   schedule:
-    # Runs at the start of every hour (UTC)
-    - cron: "0 * * * *"
+    # Every two hours while the metals market is open. America/Chicago keeps
+    # the schedule aligned with daylight-saving changes in the US session.
+    - cron: "5 17-23/2 * * 0-4"
+      timezone: "America/Chicago"
+    - cron: "5 1-15/2 * * 1-5"
+      timezone: "America/Chicago"
 
 permissions:
   contents: write
