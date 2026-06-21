@@ -4,7 +4,7 @@
   "currency": "USD",
   "unit": "troy_ounce",
   "firstRecordedAt": "2026-06-17T21:31:45Z",
-  "lastUpdated": "2026-06-20T00:04:01Z",
+  "lastUpdated": "2026-06-19T21:04:01Z",
   "entries": [
     {
       "recordedAt": "2026-06-17T21:31:45Z",
@@ -203,41 +203,11 @@
     },
     {
       "recordedAt": "2026-06-19T21:04:01Z",
-      "metals": {
-        "gold": {
-          "bid": 4153.571,
-          "ask": 4154.229,
-          "spot": 4153.90
-        },
-        "silver": {
-          "bid": 64.6925,
-          "ask": 64.7555,
-          "spot": 64.72
-        }
-      }
-    },
-    {
-      "recordedAt": "2026-06-19T22:50:04Z",
-      "metals": {
-        "gold": {
-          "bid": 4153.571,
-          "ask": 4154.229,
-          "spot": 4153.90
-        },
-        "silver": {
-          "bid": 64.6925,
-          "ask": 64.7555,
-          "spot": 64.72
-        }
-      }
-    },
-    {
-      "recordedAt": "2026-06-20T00:04:01Z",
       "sourceUpdatedAt": "2026-06-19T21:00:00Z",
       "metals": {
         "gold": {
-          "bid": 4153.569,
-          "ask": 4154.231,
+          "bid": 4153.571,
+          "ask": 4154.229,
           "spot": 4153.90
         },
         "silver": {
