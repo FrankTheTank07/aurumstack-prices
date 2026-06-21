@@ -1,10 +1,36 @@
 {
   "schemaVersion": 3,
-  "lastUpdated": "2026-06-18",
+  "lastUpdated": "2026-06-20",
   "title": "What's New",
-  "summary": "Version 1.2.0 adds recorded metal price history, richer interactive charts, and useful refresh and photo improvements.",
+  "summary": "Version 1.2.1 improves market status clarity and the accuracy of recorded gold and silver price history.",
   "announcements": [],
   "releases": [
+    {
+      "id": "1.2.1-beta",
+      "title": "Version 1.2.1 Beta",
+      "date": "2026-06-20",
+      "summary": "Clearer market status and more accurate precious metals price history.",
+      "changes": [
+        {
+          "id": "closed-market-status",
+          "title": "Clearer market status",
+          "body": "The Dashboard now shows when precious metals markets are closed and identifies the latest published market update.",
+          "category": "Improvement"
+        },
+        {
+          "id": "market-hours-price-updates",
+          "title": "Market-hours price updates",
+          "body": "AurumStack price observations now follow precious metals market hours, avoiding unnecessary updates while markets are closed.",
+          "category": "Improvement"
+        },
+        {
+          "id": "price-history-accuracy",
+          "title": "Price history accuracy",
+          "body": "Removed duplicate closed-market observations so recorded gold and silver history more accurately reflects published market activity.",
+          "category": "Fix"
+        }
+      ]
+    },
     {
       "id": "1.2.0-beta",
       "title": "Version 1.2.0 Beta",
