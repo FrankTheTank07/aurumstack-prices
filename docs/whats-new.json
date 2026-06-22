@@ -1,9 +1,16 @@
 {
   "schemaVersion": 3,
-  "lastUpdated": "2026-06-20",
+  "lastUpdated": "2026-06-21",
   "title": "What's New",
   "summary": "Version 1.2.1 improves market status clarity and the accuracy of recorded gold and silver price history.",
-  "announcements": [],
+  "announcements": [
+    {
+      "id": "platinum-palladium-coming-soon",
+      "title": "Platinum and palladium support",
+      "body": "Platinum and palladium support is planned for a future AurumStack beta update. Availability date to be determined.",
+      "date": "2026-06-21"
+    }
+  ],
   "releases": [
     {
       "id": "1.2.1-beta",
