@@ -1,29 +1,29 @@
 {
-  "updatedAt": "2026-07-08T23:18:14Z",
-  "sourceUpdatedAt": "2026-07-08T23:18:13Z",
-  "previousUpdatedAt": "2026-07-08T19:48:46Z",
-  "dayStartAt": "2026-07-08T00:00:00Z",
+  "updatedAt": "2026-07-09T04:15:46Z",
+  "sourceUpdatedAt": "2026-07-09T04:15:45Z",
+  "previousUpdatedAt": "2026-07-08T23:18:14Z",
+  "dayStartAt": "2026-07-09T00:00:00Z",
   "source": "Swissquote public quotes",
   "currency": "USD",
   "unit": "troy_ounce",
   "metals": {
     "gold": {
-      "spot": 4075.97,
-      "previousSpot": 4080.39,
-      "change": -4.42,
-      "changePercent": -0.11,
-      "dayOpenSpot": 4128.25,
-      "dayChange": -52.28,
-      "dayChangePercent": -1.27
+      "spot": 4060.24,
+      "previousSpot": 4075.97,
+      "change": -15.73,
+      "changePercent": -0.39,
+      "dayOpenSpot": 4060.24,
+      "dayChange": 0,
+      "dayChangePercent": 0
     },
     "silver": {
-      "spot": 58.36,
-      "previousSpot": 58.46,
-      "change": -0.1,
-      "changePercent": -0.17,
-      "dayOpenSpot": 60.62,
-      "dayChange": -2.26,
-      "dayChangePercent": -3.73
+      "spot": 57.79,
+      "previousSpot": 58.36,
+      "change": -0.57,
+      "changePercent": -0.98,
+      "dayOpenSpot": 57.79,
+      "dayChange": 0,
+      "dayChangePercent": 0
     }
   }
 }
