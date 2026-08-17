@@ -4,7 +4,7 @@
   "currency": "USD",
   "unit": "troy_ounce",
   "firstRecordedAt": "2026-06-17T21:31:45Z",
-  "lastUpdated": "2026-08-17T16:38:34Z",
+  "lastUpdated": "2026-08-17T18:52:28Z",
   "entries": [
     {
       "recordedAt": "2026-06-17T21:31:45Z",
@@ -6902,6 +6902,22 @@
           "bid": 66.3385,
           "ask": 66.3865,
           "spot": 66.36
+        }
+      }
+    },
+    {
+      "recordedAt": "2026-08-17T18:52:28Z",
+      "sourceUpdatedAt": "2026-08-17T18:52:26Z",
+      "metals": {
+        "gold": {
+          "bid": 4406.796,
+          "ask": 4407.454,
+          "spot": 4407.12
+        },
+        "silver": {
+          "bid": 65.8065,
+          "ask": 65.8545,
+          "spot": 65.83
         }
       }
     }
